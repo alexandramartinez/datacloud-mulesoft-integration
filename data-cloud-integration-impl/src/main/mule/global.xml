@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdc="http://www.mulesoft.org/schema/mule/sdc" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
+	xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+    http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+	http://www.mulesoft.org/schema/mule/sdc http://www.mulesoft.org/schema/mule/sdc/current/mule-sdc.xsd
+	http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+	http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
+	http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd">
+    <!-- UNCOMMENT FOR SECURED PROPERTIES
+    <sdc:sdc-config name="Salesforce_CDP_Sdc_config">
+        <sdc:oauth-user-pass-connection clientId="${secure::cdp.consumer.key}" clientSecret="${secure::cdp.consumer.secret}" username="${secure::salesforce.username}" password="${secure::salesforce.password}" audienceUrl="${salesforce.url}" />
+    </sdc:sdc-config> 
+    <secure-properties:config file="props.secure.yaml" key="${secure.key}" name="Secure_Properties_Config">
+        <secure-properties:encrypt algorithm="Blowfish" />
+    </secure-properties:config>
+    -->
+    <!-- DELETE THE FOLLOWING FOR SECURED PROPERTIES (ABOVE) -->
+    <sdc:sdc-config name="Salesforce_CDP_Sdc_config">
+        <sdc:oauth-user-pass-connection clientId="${cdp.consumer.key}" clientSecret="${cdp.consumer.secret}" username="${salesforce.username}" password="${salesforce.password}" audienceUrl="${salesforce.url}" />
+    </sdc:sdc-config>
+    <configuration-properties file="props.yaml" doc:name="Configuration properties" />
+    <http:listener-config name="data-cloud-integration-api-httpListenerConfig">
+        <http:listener-connection host="${http.listener.host}" port="${http.listener.port}" />
+    </http:listener-config>
+    <apikit:config name="data-cloud-integration-api-config" api="resource::b903eebf-16e9-46c5-8992-bffd66c2306c:data-cloud-integration-api:1.0.0:raml:zip:data-cloud-integration-api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+</mule>

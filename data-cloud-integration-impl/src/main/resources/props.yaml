@@ -1,0 +1,14 @@
+salesforce:
+  url: "https://login.salesforce.com/"
+  username: "FOR REFERENCE ONLY - DO NOT ADD YOUR USERNAME HERE, ONLY IN CLOUDHUB"
+  password: "FOR REFERENCE ONLY - DO NOT ADD YOUR PASSWORD HERE, ONLY IN CLOUDHUB"
+ 
+http:
+  listener:
+    host: "0.0.0.0"
+    port: "8081"
+
+cdp:
+  consumer:
+    key: "FOR REFERENCE ONLY - DO NOT ADD YOUR KEY HERE, ONLY IN CLOUDHUB"
+    secret: "FOR REFERENCE ONLY - DO NOT ADD YOUR SECRET HERE, ONLY IN CLOUDHUB"

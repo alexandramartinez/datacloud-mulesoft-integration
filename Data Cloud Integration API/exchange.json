@@ -1,0 +1,7 @@
+{
+    "groupId": "your-group-id",
+    "name": "data-cloud-integration-api",
+    "main": "data-cloud-integration-api.raml",
+    "assetId": "data-cloud-integration-api",
+    "version": "1.0.0"
+}
