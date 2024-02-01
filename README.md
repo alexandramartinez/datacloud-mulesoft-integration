@@ -17,9 +17,6 @@ TBD
 <summary>a) From Anypoint Code Builder Desktop</summary>
 <br/>
 
-> [!NOTE]
-> Sign in to Anypoint Platform from ACB beforehand or wait until the UI asks you to sign in to push your changes.
-
 - In ACB Desktop, click on **Design an API**
 - Under the **API Specification** tab, add a Project Name, like **Data Cloud Integration API**
 - Leave the defaults (make sure to use RAML 1.0) and click **Create Project**
