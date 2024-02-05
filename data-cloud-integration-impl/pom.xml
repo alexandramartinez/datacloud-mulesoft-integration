@@ -61,16 +61,6 @@
             <version>2.17.1</version>
         </dependency>
         <dependency>
-            <!-- This API is published here: 
-                https://anypoint.mulesoft.com/exchange/portals/mulesoft-36559/b903eebf-16e9-46c5-8992-bffd66c2306c/data-cloud-integration-api/ 
-            -->
-            <groupId>b903eebf-16e9-46c5-8992-bffd66c2306c</groupId>
-            <artifactId>data-cloud-integration-api</artifactId>
-            <version>1.0.0</version>
-            <classifier>raml</classifier>
-            <type>zip</type>
-        </dependency>
-        <dependency>
             <groupId>org.mule.modules</groupId>
             <artifactId>mule-apikit-module</artifactId>
             <version>1.10.0</version>

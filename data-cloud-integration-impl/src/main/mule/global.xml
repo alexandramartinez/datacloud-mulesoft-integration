@@ -22,5 +22,5 @@
     <http:listener-config name="data-cloud-integration-api-httpListenerConfig">
         <http:listener-connection host="${http.listener.host}" port="${http.listener.port}" />
     </http:listener-config>
-    <apikit:config name="data-cloud-integration-api-config" api="resource::b903eebf-16e9-46c5-8992-bffd66c2306c:data-cloud-integration-api:1.0.0:raml:zip:data-cloud-integration-api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+    <apikit:config name="data-cloud-integration-api-config" api="data-cloud-integration-api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
 </mule>

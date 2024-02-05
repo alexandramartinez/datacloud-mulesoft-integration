@@ -1,12 +1,78 @@
 # Data Cloud integration built in MuleSoft
 
-Temporary (?) place for the Data Cloud integration built using MuleSoft.
+Temporary (or not?) place for the Data Cloud integration built using MuleSoft.
 
-## Run locally
+There are two main folders/projects inside this repo:
+1. [Data Cloud Integration API/](/Data%20Cloud%20Integration%20API/) ~ Contains the files I used to publish the **API Specification** that is publicly available in my Exchange Portal [here](https://anypoint.mulesoft.com/exchange/portals/mulesoft-36559/b903eebf-16e9-46c5-8992-bffd66c2306c/data-cloud-integration-api/).
+2. [data-cloud-integration-impl/](/data-cloud-integration-impl/) ~ Contains the Mule project I created for you to call Data Cloud. This is the code used to generate the JAR file that you will use to deploy the Mule app in Anypoint Platform. You can download the latest JAR from the `releases` section of this repo or by clicking [here](https://github.com/alexandramartinez/datacloud-mulesoft-integration/releases/download/1.0.0/data-cloud-integration-impl-1.0.0-mule-application.jar).
 
-TBD
+## Data Cloud configuration
+
+tbd
+
+## Deploy your own Mule app
+
+Before starting, make sure you have all the Data Cloud settings ready.
+
+- Download the Mule app's JAR file [here](https://github.com/alexandramartinez/datacloud-mulesoft-integration/releases/download/1.0.0/data-cloud-integration-impl-1.0.0-mule-application.jar).
+- Take note of the following credentials. You will need them for the Mule app.
+  - `salesforce.username` - The username you use to log in to Salesforce at login.salesforce.com
+  - `salesforce.password` - The password you use to log in to Salesforce at login.salesforce.com
+  - `cdp.consumer.key` - The Consumer Key for the Connected App you created in Salesforce
+  - `cdp.consumer.secret` - The Consumer Secret for the Connected App you created in Salesforce
+- Create a free trial account in [Anypoint Platform](https://anypoint.mulesoft.com). It will expire in 30 days but you can create a new one using the same details to register, just making sure to change the username to a different one.
+- In Anypoint Platform, navigate to [Runtime Manager](https://anypoint.mulesoft.com/cloudhub).
+- Click on **Deploy Application**.
+- Add any **application name**. For example, `data-cloud-integration`
+  - We will be deploying to CloudHub 2.0, but if you're deploying to CloudHub 1.0, the application name has to be unique across all applications worldwide. If the application name is not available, you can add your username at the end to make it unique. For example, `data-cloud-integration-amartinez`.
+- Make sure the **deployment target** is set to CloudHub 2.0. It should be selected by default.
+- Select **Choose file > Upload File** under **Application File**
+- Select the JAR file you downloaded at the beginning, or get it from this repo's [releases](https://github.com/alexandramartinez/datacloud-mulesoft-integration/releases).
+- Check the following values are correctly set under **Runtime**
+
+  | field | value |
+  | - | - |
+  | 
+  | Use Edge Release Channel | ◻️ (unchecked)
+  | Runtime Version | 4.4.0 
+  | Replica Count | 1
+  | Replica size | 0.1 vCores
+  | Deployment model | Rolling update
+  | Run in Runtime Cluster Mode | ◻️ (unchecked)
+  | Use Object Store V2 | ◻️ (unchecked)
+
+- Leave everything unchecked under the **Ingress** tab.
+- Add your credentials under **Properties**. 
+  - You can add them one by one using the **Table view**
+  - Or upload the following text using the **Text view** and replace your values
+
+  ```properties
+  salesforce.username=your_username
+  salesforce.password=your_password
+  cdp.consumer.key=your_key
+  cdp.consumer.secret=your_secret
+  ```
+
+- Click on **Protect** next to each value from the **Table view** to hide your properties (only available in CloudHub 2.0).
+- Click on **Deploy Application**. Wait for a few minutes until your application has been deployed 🟢 (green circle).
+  - If you see a 🔴 red circle right after clicking **Deploy**, wait more time. It doesn't mean the app has failed, it means it's still deploying.
+- Once the app has been deployed, click on **Dashboard** tab at the left side of the screen.
+- Copy the URL. This is your host URL. It should be something like `https://data-cloud-integration-abcdef123.a1b2c3-1.usa-e2.cloudhub.io/`
+
+> [!CAUTION]
+> **DO NOT** share this URL publicly. Anyone with this URL will be able to access your Data Cloud API. 
+> 
+> If you wish to create a new URL, you will have to  delete this app from the **Settings** tab (where it says **Stop**) and create a new one following the same steps.
+>
+> You can also **Stop** and **Start** your app only when you are using it to avoid unwanted requests.
+
+## Call your integration
+
+tbd
 
 ## Create your own - step by step
+
+There is no need for you to go through these steps if you only want to make use of the integration. This is only if you want to learn how to create this whole integration step by step. From designing the API specification to implementing the Mule project.
 
 ### 1. Create the API Specification and publish it to Exchange
 
