@@ -114,8 +114,8 @@ Before starting, make sure you have all the Data Cloud settings ready.
 - Take note of the following credentials. You will need them for the Mule app.
   - `salesforce.username` - The username you use to log in to Salesforce at login.salesforce.com
   - `salesforce.password` - The password you use to log in to Salesforce at login.salesforce.com
-  - `cdp.consumer.key` - The Consumer Key for the Connected App you created in Salesforce
-  - `cdp.consumer.secret` - The Consumer Secret for the Connected App you created in Salesforce
+  - `cdp.consumer.key` - The Consumer Key for the Connected App you created in Salesforce (see [Connected App settings](#connected-app-settings))
+  - `cdp.consumer.secret` - The Consumer Secret for the Connected App you created in Salesforce (see [Connected App settings](#connected-app-settings)
 - Create a free trial account in [Anypoint Platform](https://anypoint.mulesoft.com). It will expire in 30 days but you can create a new one using the same details to register, just making sure to change the username to a different one.
 - In Anypoint Platform, navigate to [Runtime Manager](https://anypoint.mulesoft.com/cloudhub).
 - Click on **Deploy Application**.
