@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>your-group-id</groupId>
+    <groupId>YOUR_ORG_ID</groupId>
     <artifactId>data-cloud-integration-impl</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>mule-application</packaging>
-    <name>data-cloud-integration-impl</name>
+    <name>Data Cloud Integration App</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <mule.maven.plugin.version>3.3.5</mule.maven.plugin.version>
+        <mule.maven.plugin.version>4.0.0</mule.maven.plugin.version>
     </properties>
     <build>
         <plugins>
@@ -23,7 +23,9 @@
                 <artifactId>mule-maven-plugin</artifactId>
                 <version>${mule.maven.plugin.version}</version>
                 <extensions>true</extensions>
-                <configuration/>
+                <configuration>
+                    <classifier>mule-application</classifier>
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -59,7 +61,10 @@
             <version>2.17.1</version>
         </dependency>
         <dependency>
-            <groupId>your-group-id</groupId>
+            <!-- This API is published here: 
+                https://anypoint.mulesoft.com/exchange/portals/mulesoft-36559/b903eebf-16e9-46c5-8992-bffd66c2306c/data-cloud-integration-api/ 
+            -->
+            <groupId>b903eebf-16e9-46c5-8992-bffd66c2306c</groupId>
             <artifactId>data-cloud-integration-api</artifactId>
             <version>1.0.0</version>
             <classifier>raml</classifier>

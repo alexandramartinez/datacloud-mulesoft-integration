@@ -1,7 +1,0 @@
-{
-  "runtime": "4.4.0",
-  "workerSize": 0.1,
-  "applicationName": "data-cloud-integration-impl",
-  "workers": 1,
-  "autoStart": true
-}

@@ -14,7 +14,7 @@
         <secure-properties:encrypt algorithm="Blowfish" />
     </secure-properties:config>
     -->
-    <!-- DELETE THE FOLLOWING FOR SECURED PROPERTIES (ABOVE) -->
+    <!-- DELETE THE FOLLOWING FOR SECURED PROPERTIES -->
     <sdc:sdc-config name="Salesforce_CDP_Sdc_config">
         <sdc:oauth-user-pass-connection clientId="${cdp.consumer.key}" clientSecret="${cdp.consumer.secret}" username="${salesforce.username}" password="${salesforce.password}" audienceUrl="${salesforce.url}" />
     </sdc:sdc-config>
