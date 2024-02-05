@@ -32,7 +32,6 @@ Before starting, make sure you have all the Data Cloud settings ready.
 
   | field | value |
   | - | - |
-  | 
   | Use Edge Release Channel | ◻️ (unchecked)
   | Runtime Version | 4.4.0 
   | Replica Count | 1
