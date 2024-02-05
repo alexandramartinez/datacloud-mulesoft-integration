@@ -6,9 +6,105 @@ There are two main folders/projects inside this repo:
 1. [Data Cloud Integration API/](/Data%20Cloud%20Integration%20API/) ~ Contains the files I used to publish the **API Specification** that is publicly available in my Exchange Portal [here](https://anypoint.mulesoft.com/exchange/portals/mulesoft-36559/b903eebf-16e9-46c5-8992-bffd66c2306c/data-cloud-integration-api/).
 2. [data-cloud-integration-impl/](/data-cloud-integration-impl/) ~ Contains the Mule project I created for you to call Data Cloud. This is the code used to generate the JAR file that you will use to deploy the Mule app in Anypoint Platform. You can download the latest JAR from the `releases` section of this repo or by clicking [here](https://github.com/alexandramartinez/datacloud-mulesoft-integration/releases/download/1.0.0/data-cloud-integration-impl-1.0.0-mule-application.jar).
 
+## Table of Contents
+
+- [Data Cloud integration built in MuleSoft](#data-cloud-integration-built-in-mulesoft)
+  - [Table of Contents](#table-of-contents)
+  - [Data Cloud configuration](#data-cloud-configuration)
+    - [Connected App settings](#connected-app-settings)
+    - [OAuth settings](#oauth-settings)
+    - [Ingestion API settings](#ingestion-api-settings)
+    - [Data Stream settings](#data-stream-settings)
+  - [Deploy your own Mule app](#deploy-your-own-mule-app)
+  - [Call your integration](#call-your-integration)
+  - [Create your own - step by step](#create-your-own---step-by-step)
+    - [1. Create the API Specification and publish it to Exchange](#1-create-the-api-specification-and-publish-it-to-exchange)
+    - [2. Implement the API in Anypoint Code Builder Desktop](#2-implement-the-api-in-anypoint-code-builder-desktop)
+      - [global.xml](#globalxml)
+      - [implementation.xml](#implementationxml)
+        - [schema](#schema)
+        - [query](#query)
+        - [insert](#insert)
+        - [delete](#delete)
+      - [data-cloud-integration-impl.xml](#data-cloud-integration-implxml)
+      - [Properties file](#properties-file)
+      - [mule-artifact.json](#mule-artifactjson)
+
 ## Data Cloud configuration
 
-tbd
+- Log in to [Salesforce](login.salesforce.com)
+
+> [!IMPORTANT]
+> These credentials will be used as `salesforce.username` and `salesforce.password` in your Mule application's settings in Anypoint Platform (the properties in Runtime Manager).
+
+### Connected App settings
+
+- Enter **Setup**
+- Search for **App Manager**
+- Click **New Connected App**
+- Fill the following fields
+
+  | field | value
+  | - | - 
+  | Connected App Name | `MuleSoft Integration Connected App`
+  | API Name | `MuleSoft_Integration_Connected_App`
+  | Contact Email | your email
+  | Enable OAuth Settings | ✅
+  | Callback URL | `https://login.salesforce.com/services/oauth2/callback`
+  | Selected OAuth Scopes | - Access Interaction API resources (cdp_api)<br/>- Access all Data Cloud API resources (cdp_api)<br/>- Manage Data Cloud Calculated Insight data (cdp_calculated_insight_api)<br/>- Manage Data Cloud Identity Resolution (cdp_identityresolution_api)<br/>- Manage Data Cloud Ingestion API data (cdp_ingest_api)<br/>- Manage Data Cloud profile data (cdp_profile_api)<br/>- Manage user data via Web browsers (web)<br/>- Perform ANSI SQL queries on Data Cloud data (cdp_query_api)<br/>- Perform segmentation on Data Cloud data (cdp_segment_api)
+  | Enable Client Credentials Flow | ✅
+
+- Click **Save** and **Continue**
+- In the created Connected App detail page, click on **Manage Consumer Details**
+- Enter the code sent to your email
+- Click on **Generate**
+- Copy the newly generated **Staged Consumer Key** and **Staged Consumer Secret** - you will use these credentials for your Mule integration
+- Click on **Apply** and **Apply** again - note how your staged consumer details are now the main consumer details
+
+> [!IMPORTANT]
+> These credentials will be used as `cdp.consumer.key` and `cdp.consumer.secret` in your Mule application's settings in Anypoint Platform (the properties in Runtime Manager).
+
+### OAuth settings
+
+- Enter **Setup** (top-right corner)
+- Search for **OAuth and OpenID Connect Settings**
+- Make sure the **Allow OAuth Username-Password Flows** option is **On**
+
+### Ingestion API settings
+
+If you already have an Ingestion API **with a YAML schema**, just take note of the name of the Ingestion API you created. Otherwise, follow the next steps to create one.
+
+- Enter **Setup** (top-right corner)
+- Search for **Ingestion API**
+- Click on **New**
+- Add a Connector Name like **MuleSoft Ingestion API**
+
+> [!IMPORTANT]
+> This name will be used as the `sourceApiName` query parameter to call the Mule application. In this case, the correct value would be `MuleSoft_Ingestion_API`.
+
+- Click on **Save**
+- If you already have a YAML schema, upload it here and take note of the name of the object(s). If not, upload [this example schema](/example-schema.yaml) (the name of the objects are `runner_profiles` and `exercises`)
+- Click on **Save**
+
+> [!IMPORTANT]
+> Whichever object you wish to insert/delete records to, will be used as the `objectName` query parameter to call the Mule application. In this case, the correct value(s) would be `runner_profiles` or `exercises`.
+
+### Data Stream settings
+
+- Exit **Setup** / go back to the main page
+- Search for **Data Cloud**
+- Select the **Data Streams** tab from the top
+- Click **New**
+- Select **Ingestion API** and click **Next**
+- Select your **MuleSoft Ingestion API** from the dropdown
+- Select all the objects and click on **Next**
+- In the `exercises` configuration, select Category **Profile** and Primary Key **maid**
+- In the `runner_profiles` configuration, select Category **Profile** and Primary Key **maid**
+- Click **Next**
+- Select the **default** Data Space and click **Deploy**
+
+> [!NOTE]
+> In this Data Stream, we selected `maid` as the Primary Key. This is the field we're going to need per record to delete them using the Mule app.
 
 ## Deploy your own Mule app
 
