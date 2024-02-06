@@ -14,15 +14,14 @@ What's in this repo:
 
 ## Table of Contents
 
-- [Data Cloud integration built in MuleSoft](#data-cloud-integration-built-in-mulesoft)
-  - [Data Cloud configuration](#data-cloud-configuration)
-    - [Connected App settings](#connected-app-settings)
-    - [OAuth settings](#oauth-settings)
-    - [Ingestion API settings](#ingestion-api-settings)
-    - [Data Stream settings](#data-stream-settings)
-  - [Deploy your own Mule app](#deploy-your-own-mule-app)
-  - [Call your integration](#call-your-integration)
-  - [Create your own - step by step](#create-your-own---step-by-step)
+- [Data Cloud configuration](#data-cloud-configuration)
+  - [Connected App settings](#connected-app-settings)
+  - [OAuth settings](#oauth-settings)
+  - [Ingestion API settings](#ingestion-api-settings)
+  - [Data Stream settings](#data-stream-settings)
+- [Deploy your own Mule app](#deploy-your-own-mule-app)
+- [Call your integration](#call-your-integration)
+- [Create your own - step by step](#create-your-own---step-by-step)
 
 ---
 
