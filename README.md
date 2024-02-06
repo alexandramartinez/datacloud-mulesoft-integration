@@ -2,8 +2,8 @@
 
 Temporary (or not?) place for the Data Cloud integration built using MuleSoft.
 
-<img width="300" src="/images/mulesoft.png">
-<img width="300" src="/images/salesforce.png">
+<img width="100" src="/images/mulesoft.png">
+<img width="100" src="/images/salesforce.png">
 
 What's in this repo:
 1. [Data Cloud Integration API/](/Data%20Cloud%20Integration%20API/) ~ Contains the files I used to publish the **API Specification** that is publicly available in my Exchange Portal [here](https://anypoint.mulesoft.com/exchange/portals/mulesoft-36559/b903eebf-16e9-46c5-8992-bffd66c2306c/data-cloud-integration-api/).
