@@ -19,7 +19,6 @@ What's in this repo:
 ## Table of Contents
 
 - [Data Cloud integration built in MuleSoft](#data-cloud-integration-built-in-mulesoft)
-  - [Table of Contents](#table-of-contents)
   - [Data Cloud configuration](#data-cloud-configuration)
     - [Connected App settings](#connected-app-settings)
     - [OAuth settings](#oauth-settings)
@@ -121,6 +120,12 @@ If you already have an Ingestion API **with a YAML schema**, just take note of t
 
 > [!NOTE]
 > In this Data Stream, we selected `maid` as the Primary Key. This is the field we're going to need per record to delete them using the Mule app.
+
+---
+
+</br>
+<p align="center"><img height="100" src="/images/mulesoft.png"></p>
+</br>
 
 ## Deploy your own Mule app
 
