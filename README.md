@@ -2,6 +2,9 @@
 
 Temporary (or not?) place for the Data Cloud integration built using MuleSoft.
 
+<img width="300" src="/images/mulesoft.png">
+<img width="300" src="/images/salesforce.png">
+
 What's in this repo:
 1. [Data Cloud Integration API/](/Data%20Cloud%20Integration%20API/) ~ Contains the files I used to publish the **API Specification** that is publicly available in my Exchange Portal [here](https://anypoint.mulesoft.com/exchange/portals/mulesoft-36559/b903eebf-16e9-46c5-8992-bffd66c2306c/data-cloud-integration-api/).
 2. [data-cloud-integration-impl/](/data-cloud-integration-impl/) ~ Contains the Mule project I created for you to call Data Cloud. This is the code used to generate the JAR file that you will use to deploy the Mule app in Anypoint Platform. You can download the latest JAR from the `releases` section of this repo or by clicking [here](https://github.com/alexandramartinez/datacloud-mulesoft-integration/releases/download/1.0.0/data-cloud-integration-impl-1.0.0-mule-application.jar).
