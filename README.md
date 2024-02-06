@@ -214,7 +214,7 @@ If you're unfamiliar with Postman, you can find the query parameters in the **Pa
 ---
 
 </br>
-<p align="center"><img height="100" src="/images/max-terminal.gif"></p>
+<p align="center"><img height="250" src="/images/max-terminal.gif"></p>
 </br>
 
 ## Create your own - step by step
