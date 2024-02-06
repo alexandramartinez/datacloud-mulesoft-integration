@@ -343,7 +343,7 @@ Next, in the body of the request, make sure to use a JSON Array. Each Object ins
 > [!IMPORTANT]
 > Streaming in Data Cloud in limited to max 200 records per insertion.
 
-If everything ran smoothly, you will receive a `200 - OK` successful response.
+If everything runs smoothly, you will receive a `200 - OK` successful response.
 
 > [!NOTE]
 > It may take a few minutes for your data to be updated in Data Cloud. You can manually check the records in Data Cloud or wait to attempt the `/query` from your MuleSoft API.
@@ -366,7 +366,7 @@ Next, in the body of the request, make sure to use a JSON Array. Each Object ins
 > [!IMPORTANT]
 > Streaming in Data Cloud in limited to max 200 records per deletion.
 
-If everything ran smoothly, you will receive a `200 - OK` successful response.
+If everything runs smoothly, you will receive a `200 - OK` successful response.
 
 > [!NOTE]
 > It may take a few minutes for your data to be updated in Data Cloud. You can manually check the records in Data Cloud or wait to attempt the `/query` from your MuleSoft API.
