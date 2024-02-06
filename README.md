@@ -1,6 +1,6 @@
 # Data Cloud integration built in MuleSoft
 
-Temporary (or not?) place for the Data Cloud integration built using MuleSoft.
+This is a Mule 4 app created to communicate with your Data Cloud. You can query, insert, or delete records using this integration; as well as flatten a YAML schema for your Salesforce settings.
 
 ![](/images/cover-ms-sf-dc.png)
 
@@ -14,14 +14,16 @@ What's in this repo:
 
 ## Table of Contents
 
-- [Data Cloud configuration](#data-cloud-configuration)
-  - [Connected App settings](#connected-app-settings)
-  - [OAuth settings](#oauth-settings)
-  - [Ingestion API settings](#ingestion-api-settings)
-  - [Data Stream settings](#data-stream-settings)
-- [Deploy your own Mule app](#deploy-your-own-mule-app)
-- [Call your integration](#call-your-integration)
-- [Create your own - step by step](#create-your-own---step-by-step)
+- [Data Cloud integration built in MuleSoft](#data-cloud-integration-built-in-mulesoft)
+  - [Table of Contents](#table-of-contents)
+  - [Data Cloud configuration](#data-cloud-configuration)
+    - [Connected App settings](#connected-app-settings)
+    - [OAuth settings](#oauth-settings)
+    - [Ingestion API settings](#ingestion-api-settings)
+    - [Data Stream settings](#data-stream-settings)
+  - [Deploy your own Mule app](#deploy-your-own-mule-app)
+  - [Call your integration](#call-your-integration)
+  - [Create your own - step by step](#create-your-own---step-by-step)
 
 ---
 
