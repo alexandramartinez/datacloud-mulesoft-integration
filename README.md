@@ -163,7 +163,23 @@ Before starting, make sure you have all the Data Cloud settings ready.
 
 ## Call your integration
 
-tbd
+Use the REST Client you are more familiar with to call the integration. For example, [cURL](https://curl.se/), [Postman](https://www.postman.com/), [Thunder Client for VS Code](https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client), and so on.
+
+You can find [here](/rest-clients-requests/) the requests/collections for cURL, Postman, and Thunder Client. If you're already familiar with this process, you only have to add your `host` variable to Postman/Thunder Client or add it to the cURL requests.
+
+If you are unfamiliar or unsure of what are the steps, let's go through the steps using **Postman**. You can download it or create a free account and do the steps online [here](https://www.postman.com/).
+
+- Once you're in Postman, whether it's online or in the app, go to your workspace
+- Make sure you're inside the **Collections** tab and click the **Import** button
+- Download the Postman collection file (JSON format) from [this folder](/rest-clients-requests/postman/) and add it to the Postman window to import it
+- Once you see the Data Cloud Integration collection in Postman, go to the **Environments** tab
+- You can either create a global variable by clicking on **Globals** or create a new environment by clicking on **New**
+  - If you create a new environment, make sure you select it from the dropdown in the top-right of the screen
+- Add the variable `host` and paste your CloudHub URL in the **Current value** field (should be something like `https://data-cloud-integration-abcdef123.a1b2c3-1.usa-e2.cloudhub.io`)
+- Save the variable by clicking on the **Save** button
+- Go back to the **Collections** tab and now you can run all the requests!
+
+If you're unfamiliar with Postman, you can find the query parameters in the **Params** tab of each request and the request body in the **Body** tab. Once you've verified everything is correctly set up for each request, click on the **Send** button.
 
 ## Create your own - step by step
 
