@@ -38,6 +38,10 @@ What's in this repo:
       - [Properties file](#properties-file)
       - [mule-artifact.json](#mule-artifactjson)
 
+</br>
+<p align="center"><img height="100" src="/images/salesforce.png"></p>
+</br>
+
 ## Data Cloud configuration
 
 - Log in to [Salesforce](login.salesforce.com)
