@@ -10,10 +10,6 @@ What's in this repo:
 3. [rest-clients-requests](/rest-clients-requests/) ~ Contains the Postman/Thunder Client collections to run the requests to call your integration. There is also a .md file in the curl folder for you to copy/paste cURL commands if that's easier for you.
 4. [example-schema.yaml](/example-schema.yaml) ~ Example YAML file that you can use if you don't have a YAML schema to create the Ingestion API/Data Stream objects in Data Cloud.
 
-</br>
-<p align="center"><img height="300" src="/images/max-terminal.gif"></p>
-</br>
-
 ---
 
 ## Table of Contents
