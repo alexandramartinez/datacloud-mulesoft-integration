@@ -182,6 +182,12 @@ Before starting, make sure you have all the Data Cloud settings ready.
 >
 > You can also **Stop** and **Start** your app only when you are using it to avoid unwanted requests.
 
+---
+
+</br>
+<p align="center"><img height="100" src="/images/postman.svg"></p>
+</br>
+
 ## Call your integration
 
 Use the REST Client you are more familiar with to call the integration. For example, [cURL](https://curl.se/), [Postman](https://www.postman.com/), [Thunder Client for VS Code](https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client), and so on.
