@@ -14,6 +14,8 @@ What's in this repo:
 <p align="center"><img height="300" src="/images/max-terminal.gif"></p>
 </br>
 
+---
+
 ## Table of Contents
 
 - [Data Cloud integration built in MuleSoft](#data-cloud-integration-built-in-mulesoft)
@@ -37,6 +39,8 @@ What's in this repo:
       - [data-cloud-integration-impl.xml](#data-cloud-integration-implxml)
       - [Properties file](#properties-file)
       - [mule-artifact.json](#mule-artifactjson)
+
+---
 
 </br>
 <p align="center"><img height="100" src="/images/salesforce.png"></p>
