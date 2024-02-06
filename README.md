@@ -131,13 +131,16 @@ If you already have an Ingestion API **with a YAML schema**, just take note of t
 
 Before starting, make sure you have all the Data Cloud settings ready.
 
+> [!NOTE]
+> You will need to have an [Anypoint Platform](https://anypoint.mulesoft.com) account. It will expire in 30 days but you can create a new one using the same details to register, just making sure to change the username to a different one.
+
 - Download the Mule app's JAR file [here](https://github.com/alexandramartinez/datacloud-mulesoft-integration/releases/download/1.0.0/data-cloud-integration-impl-1.0.0-mule-application.jar).
 - Take note of the following credentials. You will need them for the Mule app.
   - `salesforce.username` - The username you use to log in to Salesforce at login.salesforce.com
   - `salesforce.password` - The password you use to log in to Salesforce at login.salesforce.com
   - `cdp.consumer.key` - The Consumer Key for the Connected App you created in Salesforce (see [Connected App settings](#connected-app-settings))
   - `cdp.consumer.secret` - The Consumer Secret for the Connected App you created in Salesforce (see [Connected App settings](#connected-app-settings)
-- Create a free trial account in [Anypoint Platform](https://anypoint.mulesoft.com). It will expire in 30 days but you can create a new one using the same details to register, just making sure to change the username to a different one.
+- Sign in to your [Anypoint Platform](https://anypoint.mulesoft.com) account.
 - In Anypoint Platform, navigate to [Runtime Manager](https://anypoint.mulesoft.com/cloudhub).
 - Click on **Deploy Application**.
 - Add any **application name**. For example, `data-cloud-integration`
@@ -208,9 +211,16 @@ If you are unfamiliar or unsure of what are the steps, let's go through the step
 
 If you're unfamiliar with Postman, you can find the query parameters in the **Params** tab of each request and the request body in the **Body** tab. Once you've verified everything is correctly set up for each request, click on the **Send** button.
 
+---
+
+</br>
+<p align="center"><img height="100" src="/images/max-terminal.gif"></p>
+</br>
+
 ## Create your own - step by step
 
-There is no need for you to go through these steps if you only want to make use of the integration. This is only if you want to learn how to create this whole integration step by step. From designing the API specification to implementing the Mule project.
+> [!IMPORTANT]
+> There is no need for you to go through these steps if you only want to make use of the integration. This is only if you want to learn how to create this whole integration step by step. From designing the API specification to implementing the Mule project.
 
 ### 1. Create the API Specification and publish it to Exchange
 
