@@ -1,0 +1,144 @@
+{
+	"info": {
+		"_postman_id": "1023540b-ccbd-433d-9df8-76f5738d05ac",
+		"name": "Data Cloud Integration",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3359450"
+	},
+	"item": [
+		{
+			"name": "schema",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"customer\": {\n    \"id\": 1,\n    \"first_name\": \"Alex\",\n    \"last_name\": \"Martinez\",\n    \"email\": \"alex@sf.com\",\n    \"address\": {\n      \"street\": \"415 Mission Street\",\n      \"city\": \"San Francisco\",\n      \"state\": \"CA\",\n      \"postalCode\": \"94105\",\n      \"geo\": {\n        \"lat\": 37.78916,\n        \"lng\": -122.39521\n      }\n    }\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/schema?openapiversion=3.0.3",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"schema"
+					],
+					"query": [
+						{
+							"key": "openapiversion",
+							"value": "3.0.3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "query",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "SELECT *\nFROM MuleSoft_Ingestion_API_runner_p_38447E8E__dll",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/query",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"query"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "insert",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n  {\n    \"maid\": 1,\n    \"first_name\": \"FNAME TEST 1\",\n    \"last_name\": \"LNAME TEST 1\",\n    \"email\": \"email1@sf.com\",\n    \"gender\": \"Male\",\n    \"city\": \"San Francisco\",\n    \"state\": \"CA\",\n    \"created\": \"2024-01-31\"\n  },\n  {\n    \"maid\": 2,\n    \"first_name\": \"FNAME TEST 2\",\n    \"last_name\": \"LNAME TEST 2\",\n    \"email\": \"email2@sf.com\",\n    \"gender\": \"Female\",\n    \"city\": \"San Francisco\",\n    \"state\": \"CA\",\n    \"created\": \"2024-01-31\"\n  },\n  {\n    \"maid\": 3,\n    \"first_name\": \"FNAME TEST 3\",\n    \"last_name\": \"LNAME TEST 3\",\n    \"email\": \"email3@sf.com\",\n    \"gender\": \"Female\",\n    \"city\": \"San Francisco\",\n    \"state\": \"CA\",\n    \"created\": \"2024-01-31\"\n  },\n  {\n    \"maid\": 4,\n    \"first_name\": \"FNAME TEST 4\",\n    \"last_name\": \"LNAME TEST 4\",\n    \"email\": \"email4@sf.com\",\n    \"gender\": \"Other\",\n    \"city\": \"San Francisco\",\n    \"state\": \"CA\",\n    \"created\": \"2024-01-31\"\n  },\n  {\n    \"maid\": 5,\n    \"first_name\": \"FNAME TEST 5\",\n    \"last_name\": \"LNAME TEST 5\",\n    \"email\": \"email5@sf.com\",\n    \"gender\": \"Male\",\n    \"city\": \"San Francisco\",\n    \"state\": \"CA\",\n    \"created\": \"2024-01-31\"\n  }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/insert?sourceApiName=MuleSoft_Ingestion_API&objectName=runner_profiles",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"insert"
+					],
+					"query": [
+						{
+							"key": "sourceApiName",
+							"value": "MuleSoft_Ingestion_API"
+						},
+						{
+							"key": "objectName",
+							"value": "runner_profiles"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n  1,\n  2,\n  3,\n  4,\n  5\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/delete?sourceApiName=MuleSoft_Ingestion_API&objectName=runner_profiles",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "sourceApiName",
+							"value": "MuleSoft_Ingestion_API"
+						},
+						{
+							"key": "objectName",
+							"value": "runner_profiles"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

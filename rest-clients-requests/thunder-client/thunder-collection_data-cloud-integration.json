@@ -1,0 +1,113 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "data-cloud-integration",
+    "dateExported": "2024-02-05T21:52:50.505Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "26468a29-eaf1-40c2-ab3f-8b3615eed455",
+            "colId": "c33fc121-61c0-4c4b-86b5-6c73f9f33e36",
+            "containerId": "",
+            "name": "schema",
+            "url": "{{host}}/api/schema?openapiversion=3.0.3",
+            "method": "POST",
+            "sortNum": 5000,
+            "created": "2024-01-24T19:25:45.658Z",
+            "modified": "2024-02-01T00:44:02.905Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "openapiversion",
+                    "value": "3.0.3",
+                    "isPath": false
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"customer\": {\n    \"id\": 1,\n    \"first_name\": \"Alex\",\n    \"last_name\": \"Martinez\",\n    \"email\": \"alex@sf.com\",\n    \"address\": {\n      \"street\": \"415 Mission Street\",\n      \"city\": \"San Francisco\",\n      \"state\": \"CA\",\n      \"postalCode\": \"94105\",\n      \"geo\": {\n        \"lat\": 37.78916,\n        \"lng\": -122.39521\n      }\n    }\n  }\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "13324a29-4779-44cc-8f9f-9bc934ca90bc",
+            "colId": "c33fc121-61c0-4c4b-86b5-6c73f9f33e36",
+            "containerId": "",
+            "name": "query",
+            "url": "{{host}}/api/query",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-01-24T18:12:18.691Z",
+            "modified": "2024-02-05T21:51:29.973Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "text",
+                "raw": "SELECT *\nFROM MuleSoft_Ingestion_API_runner_p_38447E8E__dll",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "6d283e82-4c4d-4bc0-bab5-b1d76a38b838",
+            "colId": "c33fc121-61c0-4c4b-86b5-6c73f9f33e36",
+            "containerId": "",
+            "name": "insert",
+            "url": "{{host}}/api/insert?sourceApiName=MuleSoft_Ingestion_API&objectName=runner_profiles",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2024-01-24T18:14:00.156Z",
+            "modified": "2024-02-01T00:44:07.739Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "sourceApiName",
+                    "value": "MuleSoft_Ingestion_API",
+                    "isPath": false
+                },
+                {
+                    "name": "objectName",
+                    "value": "runner_profiles",
+                    "isPath": false
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "[\n  {\n    \"maid\": 1,\n    \"first_name\": \"FNAME TEST 1\",\n    \"last_name\": \"LNAME TEST 1\",\n    \"email\": \"email1@sf.com\",\n    \"gender\": \"Male\",\n    \"city\": \"San Francisco\",\n    \"state\": \"CA\",\n    \"created\": \"2024-01-31\"\n  },\n  {\n    \"maid\": 2,\n    \"first_name\": \"FNAME TEST 2\",\n    \"last_name\": \"LNAME TEST 2\",\n    \"email\": \"email2@sf.com\",\n    \"gender\": \"Female\",\n    \"city\": \"San Francisco\",\n    \"state\": \"CA\",\n    \"created\": \"2024-01-31\"\n  },\n  {\n    \"maid\": 3,\n    \"first_name\": \"FNAME TEST 3\",\n    \"last_name\": \"LNAME TEST 3\",\n    \"email\": \"email3@sf.com\",\n    \"gender\": \"Female\",\n    \"city\": \"San Francisco\",\n    \"state\": \"CA\",\n    \"created\": \"2024-01-31\"\n  },\n  {\n    \"maid\": 4,\n    \"first_name\": \"FNAME TEST 4\",\n    \"last_name\": \"LNAME TEST 4\",\n    \"email\": \"email4@sf.com\",\n    \"gender\": \"Other\",\n    \"city\": \"San Francisco\",\n    \"state\": \"CA\",\n    \"created\": \"2024-01-31\"\n  },\n  {\n    \"maid\": 5,\n    \"first_name\": \"FNAME TEST 5\",\n    \"last_name\": \"LNAME TEST 5\",\n    \"email\": \"email5@sf.com\",\n    \"gender\": \"Male\",\n    \"city\": \"San Francisco\",\n    \"state\": \"CA\",\n    \"created\": \"2024-01-31\"\n  }\n]",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "e26683a9-1ff1-4eb2-bb6b-62e8ffc25f1d",
+            "colId": "c33fc121-61c0-4c4b-86b5-6c73f9f33e36",
+            "containerId": "",
+            "name": "delete",
+            "url": "{{host}}/api/delete?sourceApiName=MuleSoft_Ingestion_API&objectName=runner_profiles",
+            "method": "DELETE",
+            "sortNum": 25000,
+            "created": "2024-01-24T19:43:26.027Z",
+            "modified": "2024-02-01T00:44:11.714Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "sourceApiName",
+                    "value": "MuleSoft_Ingestion_API",
+                    "isPath": false
+                },
+                {
+                    "name": "objectName",
+                    "value": "runner_profiles",
+                    "isPath": false
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "[\n  1,\n  2,\n  3,\n  4,\n  5\n]",
+                "form": []
+            },
+            "tests": []
+        }
+    ]
+}
