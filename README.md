@@ -220,7 +220,7 @@ If you're unfamiliar with Postman, you can find the query parameters in the **Pa
 ## Create your own - step by step
 
 > [!IMPORTANT]
-> There is no need for you to go through these steps if you only want to make use of the integration. This is only if you want to learn how to create this whole integration step by step. From designing the API specification to implementing the Mule project.
+> There is no need for you to go through these steps if you only want to make use of the integration. This is only if you want to learn how to create the whole Mule integration step by step. From designing the API specification to implementing the Mule project.
 
 ### 1. Create the API Specification and publish it to Exchange
 
