@@ -142,8 +142,9 @@ Before starting, make sure you have all the Data Cloud settings ready.
 
   | field | value |
   | - | - |
-  | Use Edge Release Channel | ◻️ (unchecked)
+  | Release Channel | None
   | Runtime Version | 4.4.0 
+  | Java Version | Java 8
   | Replica Count | 1
   | Replica size | 0.1 vCores
   | Deployment model | Rolling update
