@@ -172,7 +172,7 @@ Before starting, make sure you have all the Data Cloud settings ready.
 > [!CAUTION]
 > **DO NOT** share this URL publicly. Anyone with this URL will be able to access your Data Cloud API. 
 > 
-> If you wish to create a new URL, you will have to  delete this app from the **Settings** tab (where it says **Stop**) and create a new one following the same steps.
+> If you wish to create a new URL, you will have to  delete this app from the **Settings** tab (where it says **Stop**) and deploy a new one **with a new name** following the same steps.
 >
 > You can also **Stop** and **Start** your app only when you are using it to avoid unwanted requests.
 
