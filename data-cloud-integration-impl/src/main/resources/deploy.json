@@ -1,11 +1,10 @@
 {
   "runtime": "4.4.0",
   "workerSize": 0.1,
-  "applicationName": "data-cloud-integration-impl",
+  "applicationName": "data-cloud-integration-impl-123",
   "workers": 1,
   "autoStart": true,
   "properties": {
-    "anypoint.platform.gatekeeper": "disabled",
-    "api.id": "12345678"
+    "anypoint.platform.gatekeeper": "disabled"
   }
 }
