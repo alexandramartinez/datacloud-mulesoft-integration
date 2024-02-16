@@ -8,3 +8,7 @@ http:
 
 api:
   id: "12345678"
+
+anypoint:
+  platform:
+    gatekeeper: disabled
