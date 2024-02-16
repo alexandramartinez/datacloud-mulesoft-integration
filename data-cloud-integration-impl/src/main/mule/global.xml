@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdc="http://www.mulesoft.org/schema/mule/sdc" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
-	xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+<mule xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdc="http://www.mulesoft.org/schema/mule/sdc" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
     http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
 	http://www.mulesoft.org/schema/mule/sdc http://www.mulesoft.org/schema/mule/sdc/current/mule-sdc.xsd
 	http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
 	http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
-	http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd">
+	http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd">
     <!-- UNCOMMENT FOR SECURED PROPERTIES
     <sdc:sdc-config name="Salesforce_CDP_Sdc_config">
         <sdc:oauth-user-pass-connection clientId="${secure::cdp.consumer.key}" clientSecret="${secure::cdp.consumer.secret}" username="${secure::salesforce.username}" password="${secure::salesforce.password}" audienceUrl="${salesforce.url}" />
@@ -18,9 +18,14 @@
     <sdc:sdc-config name="Salesforce_CDP_Sdc_config">
         <sdc:oauth-user-pass-connection clientId="${cdp.consumer.key}" clientSecret="${cdp.consumer.secret}" username="${salesforce.username}" password="${salesforce.password}" audienceUrl="${salesforce.url}" />
     </sdc:sdc-config>
-    <configuration-properties file="props.yaml" doc:name="Configuration properties" />
+    <configuration-properties file="${env}.props.yaml" doc:name="Configuration properties" />
+    <global-property name="env" value="dev" />
     <http:listener-config name="data-cloud-integration-api-httpListenerConfig">
         <http:listener-connection host="${http.listener.host}" port="${http.listener.port}" />
     </http:listener-config>
     <apikit:config name="data-cloud-integration-api-config" api="data-cloud-integration-api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+    <!-- NOTE: Do not run autodiscovery on ACB locally. You will receive a 503 response. -->
+    <!--       Either temporarily remove it or run it in Studio instead -->
+    <!--       This issue has been raised to the ACB team as of Feb 16, 2024. -->
+    <api-gateway:autodiscovery apiId="${api.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="e6cddcc9-7dfb-42eb-9507-3a04cf813a5a" flowRef="data-cloud-integration-api-main" />
 </mule>
