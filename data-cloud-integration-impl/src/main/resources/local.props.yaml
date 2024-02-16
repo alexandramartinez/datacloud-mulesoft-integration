@@ -1,0 +1,17 @@
+salesforce:
+  url: "https://login.salesforce.com/"
+  username: "your_username"
+  password: "your_password"
+ 
+http:
+  listener:
+    host: "0.0.0.0"
+    port: "8081"
+
+api:
+  id: "your_id"
+
+cdp:
+  consumer:
+    key: "your_key"
+    secret: "your_secret"
