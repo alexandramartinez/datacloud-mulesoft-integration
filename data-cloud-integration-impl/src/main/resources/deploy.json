@@ -3,8 +3,5 @@
   "workerSize": 0.1,
   "applicationName": "data-cloud-integration-impl",
   "workers": 1,
-  "autoStart": true,
-  "properties": {
-    "anypoint.platform.gatekeeper": "disabled"
-  }
+  "autoStart": true
 }
