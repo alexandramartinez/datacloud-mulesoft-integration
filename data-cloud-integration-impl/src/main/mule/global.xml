@@ -24,8 +24,5 @@ http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/m
         <http:listener-connection host="${http.listener.host}" port="${http.listener.port}" />
     </http:listener-config>
     <apikit:config name="data-cloud-integration-api-config" api="data-cloud-integration-api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
-    <!-- NOTE: Do not run autodiscovery on ACB locally. You will receive a 503 response. -->
-    <!--       Either temporarily remove it or run it in Studio instead -->
-    <!--       This issue has been raised to the ACB team as of Feb 16, 2024. -->
     <api-gateway:autodiscovery apiId="${api.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="e6cddcc9-7dfb-42eb-9507-3a04cf813a5a" flowRef="data-cloud-integration-api-main" />
 </mule>
