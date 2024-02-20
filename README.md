@@ -29,6 +29,8 @@ In this first part, we'll go through the Salesforce/Data Cloud settings that we 
 - [Read the article](https://www.prostdev.com/post/part-1-data-cloud-mulesoft-integration)
 - [Watch the video](https://youtu.be/WVkf2ni-S6s)
 
+![](/images/part1.webp)
+
 ---
 
 </br>
@@ -42,6 +44,8 @@ In this second part, we'll go through the MuleSoft side of the integration and y
 - [Read the article](https://www.prostdev.com/post/part-2-data-cloud-mulesoft-integration)
 - [Watch the video](https://youtu.be/A48011haXRw)
 
+![](/images/part2.webp)
+
 ---
 
 </br>
@@ -54,6 +58,8 @@ In this third part, we'll learn how to use our integration. We'll use Postman fo
 
 - [Read the article](https://www.prostdev.com/post/part-3-data-cloud-mulesoft-integration)
 - [Watch the video](https://youtu.be/CNAnWwUxycg)
+
+![](/images/part3.webp)
 
 ---
 
