@@ -16,6 +16,8 @@ What's in this repo:
 
 I have created detailed resources for you to follow all the necessary steps to get this integration working.
 
+---
+
 </br>
 <p align="center"><img height="100" src="/images/salesforce.png"></p>
 </br>
@@ -26,6 +28,8 @@ In this first part, we'll go through the Salesforce/Data Cloud settings that we 
 
 - [Read the article](https://www.prostdev.com/post/part-1-data-cloud-mulesoft-integration)
 - [Watch the video](https://youtu.be/WVkf2ni-S6s)
+
+---
 
 </br>
 <p align="center"><img height="100" src="/images/mulesoft.png"></p>
@@ -38,6 +42,8 @@ In this second part, we'll go through the MuleSoft side of the integration and y
 - [Read the article](https://www.prostdev.com/post/part-2-data-cloud-mulesoft-integration)
 - [Watch the video](https://youtu.be/A48011haXRw)
 
+---
+
 </br>
 <p align="center"><img height="100" src="/images/postman.svg"></p>
 </br>
@@ -49,6 +55,8 @@ In this third part, we'll learn how to use our integration. We'll use Postman fo
 - [Read the article](https://www.prostdev.com/post/part-3-data-cloud-mulesoft-integration)
 - [Watch the video](https://youtu.be/CNAnWwUxycg)
 
+---
+
 </br>
 <p align="center"><img height="100" src="/images/mulesoft.png"></p>
 </br>
@@ -57,6 +65,12 @@ In this third part, we'll learn how to use our integration. We'll use Postman fo
 
 Coming soon
 
+---
+
 ## Create your own - step by step
 
 Follow [this guide](/step-by-step.md) if you want to create your own Mule integration from scratch!
+
+</br>
+<p align="center"><img height="200" src="/images/max-terminal.gif"></p>
+</br>
