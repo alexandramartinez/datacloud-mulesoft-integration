@@ -69,7 +69,15 @@ In this third part, we'll learn how to use our integration. We'll use Postman fo
 
 ### Part 4: Secure your API with basic authentication in API Manager
 
-Coming soon
+In Part 2 of this series, we learned that we should not share the CloudHub URL because everyone had access to our Data Cloud credentials with just the link.
+
+
+There is a simple solution to this problem. In this post, we'll learn how to connect our Mule app (deployed in CloudHub) to API Manager to add basic authentication. This way, even if you share your URL by mistake, people would still need your username/password to access it.
+
+- [Read the article](https://www.prostdev.com/post/part-4-data-cloud-mulesoft-integration)
+- [Watch the video](https://youtu.be/r_AM3P8Y-_Q)
+
+![](/images/part4.jpg)
 
 ---
 
