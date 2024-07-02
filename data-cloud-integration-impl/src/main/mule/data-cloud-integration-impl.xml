@@ -15,12 +15,10 @@
             <on-error-propagate type="APIKIT:BAD_REQUEST">
                 <ee:transform doc:name="Transform Message">
                     <ee:message>
-                        <ee:set-payload>
-                            <![CDATA[%dw 2.0
+                        <ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
-{message: "Bad request"}]]>
-                        </ee:set-payload>
+{message: "Bad request"}]]></ee:set-payload>
                     </ee:message>
                     <ee:variables>
                         <ee:set-variable variableName="httpStatus">400</ee:set-variable>
@@ -30,12 +28,10 @@ output application/json
             <on-error-propagate type="APIKIT:NOT_FOUND">
                 <ee:transform doc:name="Transform Message">
                     <ee:message>
-                        <ee:set-payload>
-                            <![CDATA[%dw 2.0
+                        <ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
-{message: "Resource not found"}]]>
-                        </ee:set-payload>
+{message: "Resource not found"}]]></ee:set-payload>
                     </ee:message>
                     <ee:variables>
                         <ee:set-variable variableName="httpStatus">404</ee:set-variable>
@@ -45,12 +41,10 @@ output application/json
             <on-error-propagate type="APIKIT:METHOD_NOT_ALLOWED">
                 <ee:transform doc:name="Transform Message">
                     <ee:message>
-                        <ee:set-payload>
-                            <![CDATA[%dw 2.0
+                        <ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
-{message: "Method not allowed"}]]>
-                        </ee:set-payload>
+{message: "Method not allowed"}]]></ee:set-payload>
                     </ee:message>
                     <ee:variables>
                         <ee:set-variable variableName="httpStatus">405</ee:set-variable>
@@ -60,12 +54,10 @@ output application/json
             <on-error-propagate type="APIKIT:NOT_ACCEPTABLE">
                 <ee:transform doc:name="Transform Message">
                     <ee:message>
-                        <ee:set-payload>
-                            <![CDATA[%dw 2.0
+                        <ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
-{message: "Not acceptable"}]]>
-                        </ee:set-payload>
+{message: "Not acceptable"}]]></ee:set-payload>
                     </ee:message>
                     <ee:variables>
                         <ee:set-variable variableName="httpStatus">406</ee:set-variable>
@@ -75,12 +67,10 @@ output application/json
             <on-error-propagate type="APIKIT:UNSUPPORTED_MEDIA_TYPE">
                 <ee:transform doc:name="Transform Message">
                     <ee:message>
-                        <ee:set-payload>
-                            <![CDATA[%dw 2.0
+                        <ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
-{message: "Unsupported media type"}]]>
-                        </ee:set-payload>
+{message: "Unsupported media type"}]]></ee:set-payload>
                     </ee:message>
                     <ee:variables>
                         <ee:set-variable variableName="httpStatus">415</ee:set-variable>
@@ -90,12 +80,10 @@ output application/json
             <on-error-propagate type="APIKIT:NOT_IMPLEMENTED">
                 <ee:transform doc:name="Transform Message">
                     <ee:message>
-                        <ee:set-payload>
-                            <![CDATA[%dw 2.0
+                        <ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
-{message: "Not Implemented"}]]>
-                        </ee:set-payload>
+{message: "Not Implemented"}]]></ee:set-payload>
                     </ee:message>
                     <ee:variables>
                         <ee:set-variable variableName="httpStatus">501</ee:set-variable>
@@ -115,5 +103,8 @@ output application/json
     </flow>
     <flow name="post:\schema:application\json:data-cloud-integration-api-config">
         <flow-ref name="implementation-schema" />
+    </flow>
+    <flow name="post:\bulk:text\plain:data-cloud-integration-api-config">
+        <flow-ref  name="implementation-bulk"/>
     </flow>
 </mule>

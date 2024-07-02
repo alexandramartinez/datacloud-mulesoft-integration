@@ -332,3 +332,47 @@ traits:
       > ℹ️ **Note**
       >
       > It may take a few minutes for your data to be updated in Data Cloud. You can manually check the records in Data Cloud or wait to attempt the `/query` from your MuleSoft API.
+
+/bulk:
+  post:
+    displayName: Update records in bulk
+    is:
+      - dataCloudApiParams
+    body:
+      text/plain:
+    responses:
+      "200":
+        body:
+          application/json:
+            type: DataCloudSuccessfulResponse
+    description: |
+      TODO~~
+      Make sure you add the following query parameters to let Data Cloud know more information of where you want to insert new records:
+
+      - `sourceApiName` i.e., `MuleSoft_Ingestion_API`
+      - `objectName` i.e., `runner_profiles`
+
+      Next, in the body of the request, make sure to use a JSON Array. Each Object inside this Array is a new record.
+
+      For example:
+
+      ```json
+      [
+        {
+          "maid": 1,
+          "first_name": "Alex",
+          "last_name": "Martinez",
+          "email": "alex@sf.com",
+          "gender": "NB",
+          "city": "Toronto",
+          "state": "ON",
+          "created": "2017-07-21"
+        }
+      ]
+      ```
+
+      If everything ran smoothly, you will receive a `200 - OK` successful response.
+
+      > ℹ️ **Note**
+      >
+      > It may take a few minutes for your data to be updated in Data Cloud. You can manually check the records in Data Cloud or wait to attempt the `/query` from your MuleSoft API.

@@ -1,48 +1,50 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdc="http://www.mulesoft.org/schema/mule/sdc" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-    http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
-	http://www.mulesoft.org/schema/mule/sdc http://www.mulesoft.org/schema/mule/sdc/current/mule-sdc.xsd">
-    <sub-flow name="implementation-schema">
-        <ee:transform doc:name="flatten and transform to yaml schema">
-            <ee:message>
-                <ee:set-payload resource="dw/schema.dwl" />
-            </ee:message>
-        </ee:transform>
-    </sub-flow>
-    <sub-flow name="implementation-query">
-        <ee:transform doc:name="text to json">
-            <ee:message>
-                <ee:set-payload resource="dw/text-to-json.dwl" />
-            </ee:message>
-        </ee:transform>
-        <sdc:query config-ref="Salesforce_CDP_Sdc_config" doc:name="Query" doc:id="zcumcy" />
-        <ee:transform doc:name="extract data">
-            <ee:message>
-                <ee:set-payload>
-                    <![CDATA[%dw 2.0
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:sdc="http://www.mulesoft.org/schema/mule/sdc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd     http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd  http://www.mulesoft.org/schema/mule/sdc http://www.mulesoft.org/schema/mule/sdc/current/mule-sdc.xsd">
+  <sub-flow name="implementation-schema">
+    <ee:transform doc:name="flatten and transform to yaml schema">
+      <ee:message>
+        <ee:set-payload resource="dw/schema.dwl"></ee:set-payload>
+      </ee:message>
+    </ee:transform>
+  </sub-flow>
+  <sub-flow name="implementation-query">
+    <ee:transform doc:name="text to json">
+      <ee:message>
+        <ee:set-payload resource="dw/text-to-json.dwl"></ee:set-payload>
+      </ee:message>
+    </ee:transform>
+    <sdc:query config-ref="Salesforce_CDP_Sdc_config" doc:id="zcumcy" doc:name="Query"></sdc:query>
+    <ee:transform doc:name="extract data">
+      <ee:message>
+        <ee:set-payload>
+          <![CDATA[%dw 2.0
         output application/json
         ---
         payload.data]]>
-                </ee:set-payload>
-            </ee:message>
-        </ee:transform>
-    </sub-flow>
-    <sub-flow name="implementation-insert">
-        <ee:transform doc:name="add data">
-            <ee:message>
-                <ee:set-payload>
-                    <![CDATA[%dw 2.0
+        </ee:set-payload>
+      </ee:message>
+    </ee:transform>
+  </sub-flow>
+  <sub-flow name="implementation-insert">
+    <ee:transform doc:name="add data">
+      <ee:message>
+        <ee:set-payload>
+          <![CDATA[%dw 2.0
         output application/json
         ---
         {
             data: payload
         }]]>
-                </ee:set-payload>
-            </ee:message>
-        </ee:transform>
-        <sdc:insert-objects sourceNameUriParam="#[attributes.queryParams.sourceApiName]" objectNameUriParam="#[attributes.queryParams.objectName]" config-ref="Salesforce_CDP_Sdc_config" doc:name="Insert" doc:id="vxmdir" />
-    </sub-flow>
-    <sub-flow name="implementation-delete">
-        <sdc:delete-objects sourceNameUriParam="#[attributes.queryParams.sourceApiName]" objectNameUriParam="#[attributes.queryParams.objectName]" idsQueryParams="#[output application/java --- payload]" config-ref="Salesforce_CDP_Sdc_config" doc:name="Delete" doc:id="wgexgs"></sdc:delete-objects>
-    </sub-flow>
+        </ee:set-payload>
+      </ee:message>
+    </ee:transform>
+    <sdc:insert-objects config-ref="Salesforce_CDP_Sdc_config" doc:id="vxmdir" doc:name="Insert" objectNameUriParam="#[attributes.queryParams.objectName]" sourceNameUriParam="#[attributes.queryParams.sourceApiName]"></sdc:insert-objects>
+  </sub-flow>
+  <sub-flow name="implementation-delete">
+    <sdc:delete-objects config-ref="Salesforce_CDP_Sdc_config" doc:id="wgexgs" doc:name="Delete" idsQueryParams="#[output application/java --- payload]" objectNameUriParam="#[attributes.queryParams.objectName]" sourceNameUriParam="#[attributes.queryParams.sourceApiName]"></sdc:delete-objects>
+  </sub-flow>
+  <sub-flow name="implementation-bulk">
+    <sdc:create-bulk-job sourceNameUriParam="#[attributes.queryParams.sourceApiName]" objectNameUriParam="#[attributes.queryParams.objectName]" operationUriParam="upsert" config-ref="Salesforce_CDP_Sdc_config" doc:name="Bulk - Create Job" doc:id="szjpun" />
+    <set-variable value="#[payload.id]" variableName="jobId" doc:name="Set variable" doc:id="kxalsy" />
+    <sdc:update-bulk-operation-job idUriParam="#[vars.jobId]" state="Aborted" config-ref="Salesforce_CDP_Sdc_config" doc:name="Bulk - Close / Abort Job" doc:id="owknrc" />
+  </sub-flow>
 </mule>
