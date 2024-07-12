@@ -16,10 +16,12 @@
     <ee:transform doc:name="extract data">
       <ee:message>
         <ee:set-payload>
+
           <![CDATA[%dw 2.0
         output application/json
         ---
         payload.data]]>
+
         </ee:set-payload>
       </ee:message>
     </ee:transform>
@@ -28,12 +30,14 @@
     <ee:transform doc:name="add data">
       <ee:message>
         <ee:set-payload>
+
           <![CDATA[%dw 2.0
         output application/json
         ---
         {
             data: payload
         }]]>
+
         </ee:set-payload>
       </ee:message>
     </ee:transform>
@@ -42,9 +46,33 @@
   <sub-flow name="implementation-delete">
     <sdc:delete-objects config-ref="Salesforce_CDP_Sdc_config" doc:id="wgexgs" doc:name="Delete" idsQueryParams="#[output application/java --- payload]" objectNameUriParam="#[attributes.queryParams.objectName]" sourceNameUriParam="#[attributes.queryParams.sourceApiName]"></sdc:delete-objects>
   </sub-flow>
-  <sub-flow name="implementation-bulk">
-    <sdc:create-bulk-job sourceNameUriParam="#[attributes.queryParams.sourceApiName]" objectNameUriParam="#[attributes.queryParams.objectName]" operationUriParam="upsert" config-ref="Salesforce_CDP_Sdc_config" doc:name="Bulk - Create Job" doc:id="szjpun" />
-    <set-variable value="#[payload.id]" variableName="jobId" doc:name="Set variable" doc:id="kxalsy" />
-    <sdc:update-bulk-operation-job idUriParam="#[vars.jobId]" state="Aborted" config-ref="Salesforce_CDP_Sdc_config" doc:name="Bulk - Close / Abort Job" doc:id="owknrc" />
+  <sub-flow name="implementation-bulk-upsert">
+    <set-variable doc:id="hdhhqn" doc:name="originalPayload in text/csv" value='#[output text/csv 
+var contentType = payload.^mediaType 
+--- 
+if (contentType contains "text")
+read(payload,"text/csv") 
+else payload]' variableName="originalPayload"></set-variable>
+    <sdc:create-bulk-job config-ref="Salesforce_CDP_Sdc_config" doc:id="tojmzu" objectNameUriParam="#[attributes.queryParams.objectName]" operationUriParam="upsert" sourceNameUriParam="#[attributes.queryParams.sourceApiName]"></sdc:create-bulk-job>
+    <set-variable doc:id="yhgubz" doc:name="jobId" value="#[payload.id]" variableName="jobId"></set-variable>
+    <logger doc:id="vpfnkg" doc:name="Logger" message="#[&quot;JOB ID CREATED: &quot; ++ vars.jobId]"></logger>
+    <try doc:id="secumw" doc:name="Try">
+      <sdc:upload-data-bulk-job config-ref="Salesforce_CDP_Sdc_config" doc:id="nbpkxs" doc:name="Upload originalPayload" idUriParam="#[vars.jobId]">
+        <sdc:upload-data-bulk-job-body>#[vars.originalPayload]</sdc:upload-data-bulk-job-body>
+      </sdc:upload-data-bulk-job>
+      <sdc:update-bulk-operation-job config-ref="Salesforce_CDP_Sdc_config" doc:id="bhtzdz" doc:name="UploadComplete" idUriParam="#[vars.jobId]" state="UploadComplete"></sdc:update-bulk-operation-job>
+      <error-handler>
+        <on-error-continue>
+          <sdc:update-bulk-operation-job config-ref="Salesforce_CDP_Sdc_config" doc:id="psonzs" doc:name="Aborted" idUriParam="#[vars.jobId]" state="Aborted"></sdc:update-bulk-operation-job>
+        </on-error-continue>
+      </error-handler>
+    </try>
+    <flow-ref doc:name="getJob" name="implementation-bulk-getJob"></flow-ref>
+  </sub-flow>
+  <sub-flow name="implementation-bulk-getJob">
+    <sdc:get-bulk-job config-ref="Salesforce_CDP_Sdc_config" doc:id="cucwnl" doc:name="Bulk - Get Job" idUriParam="#[vars.jobId]"></sdc:get-bulk-job>
+  </sub-flow>
+  <sub-flow name="implementation-bulk-delete">
+    <sdc:delete-bulk-job idUriParam="#[vars.jobId]" config-ref="Salesforce_CDP_Sdc_config" doc:name="Bulk - Delete Job" doc:id="vunjpt" />
   </sub-flow>
 </mule>

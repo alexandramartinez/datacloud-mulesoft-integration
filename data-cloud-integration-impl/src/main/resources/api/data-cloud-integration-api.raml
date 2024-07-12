@@ -3,12 +3,73 @@ title: Data Cloud Integration API
 version: 1.0.0
 
 types:
+  CustomErrorMessage:
+    properties:
+      error:
+        type: object
+        properties:
+          description:
+            type: string
+            example: Request returned status code 409
+          message:
+            type: string
+            example: The request conflicts with current state of the target resource.
+          statusCode:
+            type: number
+            example: 409
+          reasonPhrase:
+            type: string
+            example: Conflict
+          MuleRecommendation: 
+            type: string
+            example: There probably is already a job in queue for this specific object. If you have the job ID, you can try getting the job's details to verify its state. If the state appears as InProgress, you will have to wait until Data Cloud finishes the processing (JobComplete/Failed) to try this operation again.
   DataCloudSuccessfulResponse:
     properties:
       accepted:
         default: true
         example: true
         type: boolean
+  DataCloudBulkJob:
+    properties:
+      object:
+        type: string
+        example: customer
+      id:
+        type: string
+        example: "asjdfl-a2452-vcc453545"
+      operation:
+        type: string
+        example: upsert
+      sourceName:
+        type: string
+        example: runner_profiles
+      createdById:
+        type: string
+        example: "06521s54JF"
+      createdDate:
+        type: string
+        example: "2024-07-11T20:15:00.000000Z"
+      systemModstamp:
+        type: string
+        example: ""
+      state:
+        type: string
+        example: UploadComplete
+      contentType:
+        type: string
+        example: CSV
+      apiVersion:
+        type: string
+        example: v1
+      contentUrl:
+        type: string
+        example: "/api/v1/ingest/jobs/asjdfl-a2452-vcc453545/batches"
+      retries:
+        type: number
+        example: 0
+      totalProcessingTime:
+        type: number
+        example: 0
 
 traits:
   dataCloudApiParams:
@@ -25,6 +86,16 @@ traits:
           You can find this value by taking a look at your Ingestion API settings. This should be one of the objects you uploaded from the YAML schema in Salesforce. You should also be able to find this from your Data Stream settings.
         example: runner_profiles
         type: string
+  bulkApiCustomErrorResponse:
+    responses:
+      409:
+        body:
+          application/json:
+            type: CustomErrorMessage
+      404:
+        body:
+          application/json:
+            type: CustomErrorMessage
 
 /schema:
   post:
@@ -137,7 +208,7 @@ traits:
       then, based on this new input, you will receive the YAML schema like the following:
 
       > ⚠️ **Important**
-      > 
+      >
       > Take note of the object(s) name(s) from this YAML schema because you will use them for the insertion and deletion.
       > For example, in the following YAML schema, the object name is `customer`.
 
@@ -334,45 +405,151 @@ traits:
       > It may take a few minutes for your data to be updated in Data Cloud. You can manually check the records in Data Cloud or wait to attempt the `/query` from your MuleSoft API.
 
 /bulk:
-  post:
-    displayName: Update records in bulk
-    is:
-      - dataCloudApiParams
-    body:
-      text/plain:
-    responses:
-      "200":
-        body:
-          application/json:
-            type: DataCloudSuccessfulResponse
-    description: |
-      TODO~~
-      Make sure you add the following query parameters to let Data Cloud know more information of where you want to insert new records:
+  /upsert:
+    post:
+      displayName: Insert unexisting records or update existing ones in bulk
+      is:
+        - dataCloudApiParams
+        - bulkApiCustomErrorResponse
+      body:
+        text/plain:
+          example: |
+            id,first_name,last_name,email,street,city,state,postalCode,lat,lng
+            1,Alex,Martinez,alex@sf.com,415 Mission Street,San Francisco,CA,94105,37.78916,-122.39521
+            2,Akshata,Sawant,akshata@sf.com,415 Mission Street,San Francisco,CA,94105,37.78916,-122.39521
+            3,Danielle,Larregui,danielle@sf.com,415 Mission Street,San Francisco,CA,94105,37.78916,-122.39521
+        application/json:
+          items:
+            example:
+              strict: true
+              value:
+                maid: 1
+                first_name: Alex
+                last_name: Martinez
+                email: alex@sf.com
+                gender: NB
+                city: Toronto
+                state: ON
+                created: 2017-07-21
+            type: object
+      responses:
+        "200":
+          body:
+            application/json:
+              type: DataCloudBulkJob
+      description: |
+        Make sure you add the following query parameters to let Data Cloud know more information of where you want to insert new records:
 
-      - `sourceApiName` i.e., `MuleSoft_Ingestion_API`
-      - `objectName` i.e., `runner_profiles`
+        - `sourceApiName` i.e., `MuleSoft_Ingestion_API`
+        - `objectName` i.e., `runner_profiles`
 
-      Next, in the body of the request, make sure to use a JSON Array. Each Object inside this Array is a new record.
+        Next, in the body of the request, make sure to use a JSON or CSV format, using application/json or text/plain content type respectively. The headers on the first line (for CSV) or the field names (for JSON) have to match the names of the fields in Data Cloud.
 
-      For example:
+        For example:
 
-      ```json
-      [
+        ```csv
+        maid,first_name,last_name,email,gender,city,state,created
+        1,Alex,Martinez,alex@sf.com,NB,Toronto,ON,2017-07-21
+        ```
+
+        or
+
+        ```json
+        [
+          {
+            "maid": 1,
+            "first_name": "Alex",
+            "last_name": "Martinez",
+            "email": "alex@sf.com",
+            "gender": "NB",
+            "city": "Toronto",
+            "state": "ON",
+            "created": "2017-07-21"
+          }
+        ]
+        ```
+
+        If everything ran smoothly, you will receive a `200 - OK` successful response with the details of the Job.
+
+        For example:
+
+        ```json
         {
-          "maid": 1,
-          "first_name": "Alex",
-          "last_name": "Martinez",
-          "email": "alex@sf.com",
-          "gender": "NB",
-          "city": "Toronto",
-          "state": "ON",
-          "created": "2017-07-21"
+            "object": "customer",
+            "id": "f3a58-8d22-4a72-a41d-083c3c",
+            "operation": "upsert",
+            "sourceName": "MuleSoft_Customers",
+            "createdById": "0000AD",
+            "createdDate": "2024-07-11T20:15:00.000000Z",
+            "systemModstamp": "",
+            "state": "UploadComplete",
+            "contentType": "CSV",
+            "apiVersion": "v1",
+            "contentUrl": "/api/v1/ingest/jobs/f3a58-8d22-4a72-a41d-083c3c/batches",
+            "retries": 0,
+            "totalProcessingTime": 0
         }
-      ]
-      ```
+        ```
 
-      If everything ran smoothly, you will receive a `200 - OK` successful response.
+        > ℹ️ **Note**
+        >
+        > It may take a few minutes/hours for your data to be updated in Data Cloud. You can manually check the records in Data Cloud, attempt the `/query` from your MuleSoft API, or attempt the `GET /bulk/{id}` from your MuleSoft API.
 
-      > ℹ️ **Note**
-      >
-      > It may take a few minutes for your data to be updated in Data Cloud. You can manually check the records in Data Cloud or wait to attempt the `/query` from your MuleSoft API.
+  /{id}:
+    uriParameters:
+      id:
+        type: string
+        example: "f3a58-8d22-4a72-a41d-083c3c"
+    delete:
+      displayName: Close/Abort and Delete an existing bulk job
+      is: 
+        - bulkApiCustomErrorResponse
+      responses:
+        "200":
+          body:
+            application/json:
+              type: DataCloudSuccessfulResponse
+      description: |
+        Deletes an existing bulk job based on its ID. Only the Job ID is needed, nothing else.
+
+        If the given job is not finished yet (not in a `Failed` or `JobComplete` state), it will be aborted first in order to delete it.
+
+        If everything ran smoothly, you will receive a `200 - OK` successful response.
+
+    get:
+      displayName: Retrieve the information for a bulk job
+      is:
+        - dataCloudApiParams
+        - bulkApiCustomErrorResponse
+      responses:
+        "200":
+          body:
+            application/json:
+              type: DataCloudBulkJob
+      description: |
+        Make sure you add the following query parameters to let Data Cloud know more information of where you want to insert new records:
+
+        - `sourceApiName` i.e., `MuleSoft_Ingestion_API`
+        - `objectName` i.e., `runner_profiles`
+
+        If everything ran smoothly, you will receive a `200 - OK` successful response with the details of the Job.
+
+        For example:
+
+        ```json
+        {
+            "object": "customer",
+            "id": "f3a58-8d22-4a72-a41d-083c3c",
+            "operation": "upsert",
+            "sourceName": "MuleSoft_Customers",
+            "createdById": "0000AD",
+            "createdDate": "2024-07-11T20:15:00.000000Z",
+            "systemModstamp": "",
+            "state": "UploadComplete",
+            "contentType": "CSV",
+            "apiVersion": "v1",
+            "contentUrl": "/api/v1/ingest/jobs/f3a58-8d22-4a72-a41d-083c3c/batches",
+            "retries": 0,
+            "totalProcessingTime": 0
+        }
+        ```
