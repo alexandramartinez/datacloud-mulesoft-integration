@@ -144,7 +144,15 @@ output application/json
     </flow>
     <flow name="delete:\bulk\(id):data-cloud-integration-api-config">
         <flow-ref name="global-set-jobId-from-uriParam" />
-        <flow-ref name="implementation-bulk-delete" />
+        <flow-ref name="implementation-bulk-deleteJob" />
+        <error-handler>
+            <on-error-continue>
+                <flow-ref name="global-create-error" />
+            </on-error-continue>
+        </error-handler>
+    </flow>
+    <flow name="get:\bulk:data-cloud-integration-api-config">
+        <flow-ref  name="implementation-bulk-getAllJobs"/>
         <error-handler>
             <on-error-continue>
                 <flow-ref name="global-create-error" />

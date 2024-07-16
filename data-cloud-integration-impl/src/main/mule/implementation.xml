@@ -1,4 +1,4 @@
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:sdc="http://www.mulesoft.org/schema/mule/sdc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd     http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd  http://www.mulesoft.org/schema/mule/sdc http://www.mulesoft.org/schema/mule/sdc/current/mule-sdc.xsd">
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:sdc="http://www.mulesoft.org/schema/mule/sdc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd     http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd  http://www.mulesoft.org/schema/mule/sdc http://www.mulesoft.org/schema/mule/sdc/current/mule-sdc.xsd  http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
   <sub-flow name="implementation-schema">
     <ee:transform doc:name="flatten and transform to yaml schema">
       <ee:message>
@@ -16,12 +16,12 @@
     <ee:transform doc:name="extract data">
       <ee:message>
         <ee:set-payload>
-
+                    
           <![CDATA[%dw 2.0
         output application/json
         ---
         payload.data]]>
-
+                  
         </ee:set-payload>
       </ee:message>
     </ee:transform>
@@ -30,14 +30,14 @@
     <ee:transform doc:name="add data">
       <ee:message>
         <ee:set-payload>
-
+                    
           <![CDATA[%dw 2.0
         output application/json
         ---
         {
             data: payload
         }]]>
-
+                  
         </ee:set-payload>
       </ee:message>
     </ee:transform>
@@ -47,12 +47,7 @@
     <sdc:delete-objects config-ref="Salesforce_CDP_Sdc_config" doc:id="wgexgs" doc:name="Delete" idsQueryParams="#[output application/java --- payload]" objectNameUriParam="#[attributes.queryParams.objectName]" sourceNameUriParam="#[attributes.queryParams.sourceApiName]"></sdc:delete-objects>
   </sub-flow>
   <sub-flow name="implementation-bulk-upsert">
-    <set-variable doc:id="hdhhqn" doc:name="originalPayload in text/csv" value='#[output text/csv 
-var contentType = payload.^mediaType 
---- 
-if (contentType contains "text")
-read(payload,"text/csv") 
-else payload]' variableName="originalPayload"></set-variable>
+    <set-variable doc:id="hdhhqn" doc:name="originalPayload in text/csv" value="#[output text/csv  var contentType = payload.^mediaType  ---  if (contentType contains &quot;text&quot;) read(payload,&quot;text/csv&quot;)  else payload]" variableName="originalPayload"></set-variable>
     <sdc:create-bulk-job config-ref="Salesforce_CDP_Sdc_config" doc:id="tojmzu" objectNameUriParam="#[attributes.queryParams.objectName]" operationUriParam="upsert" sourceNameUriParam="#[attributes.queryParams.sourceApiName]"></sdc:create-bulk-job>
     <set-variable doc:id="yhgubz" doc:name="jobId" value="#[payload.id]" variableName="jobId"></set-variable>
     <logger doc:id="vpfnkg" doc:name="Logger" message="#[&quot;JOB ID CREATED: &quot; ++ vars.jobId]"></logger>
@@ -72,7 +67,66 @@ else payload]' variableName="originalPayload"></set-variable>
   <sub-flow name="implementation-bulk-getJob">
     <sdc:get-bulk-job config-ref="Salesforce_CDP_Sdc_config" doc:id="cucwnl" doc:name="Bulk - Get Job" idUriParam="#[vars.jobId]"></sdc:get-bulk-job>
   </sub-flow>
-  <sub-flow name="implementation-bulk-delete">
-    <sdc:delete-bulk-job idUriParam="#[vars.jobId]" config-ref="Salesforce_CDP_Sdc_config" doc:name="Bulk - Delete Job" doc:id="vunjpt" />
+  <sub-flow name="implementation-bulk-deleteJob">
+    <try doc:id="sfeumg" doc:name="Try">
+      <sdc:delete-bulk-job config-ref="Salesforce_CDP_Sdc_config" doc:id="vunjpt" doc:name="Bulk - Delete Job" idUriParam="#[vars.jobId]"></sdc:delete-bulk-job>
+      <error-handler>
+        <on-error-continue>
+          <sdc:update-bulk-operation-job config-ref="Salesforce_CDP_Sdc_config" doc:id="myioys" doc:name="Abort Job" idUriParam="#[vars.jobId]" state="Aborted"></sdc:update-bulk-operation-job>
+          <sdc:delete-bulk-job config-ref="Salesforce_CDP_Sdc_config" doc:id="vunpt" doc:name="Bulk - Delete Job" idUriParam="#[vars.jobId]"></sdc:delete-bulk-job>
+        </on-error-continue>
+      </error-handler>
+    </try>
+  </sub-flow>
+  <sub-flow name="implementation-bulk-getAllJobs">
+    <ee:transform doc:name="SF request">
+      <ee:message>
+        <ee:set-payload resource="dw/request-token-sf.dwl"></ee:set-payload>
+      </ee:message>
+    </ee:transform>
+    <http:request doc:id="lcsuhf" doc:name="SFTokenResponse" method="POST" target="SFTokenResponse" url="#[Mule::p(&quot;salesforce.url&quot;) ++ &quot;services/oauth2/token&quot;]">
+      <http:headers>
+                
+        <![CDATA[#[{
+                    "Content-Type": "application/x-www-form-urlencoded"
+                }]]]>
+              
+      </http:headers>
+    </http:request>
+    <ee:transform doc:name="DC request">
+      <ee:message>
+        <ee:set-payload resource="dw/request-token-dc.dwl"></ee:set-payload>
+      </ee:message>
+    </ee:transform>
+    <http:request doc:id="jvuump" doc:name="DCTokenResponse" method="POST" target="DCTokenResponse" url="#[vars.SFTokenResponse.instance_url ++ &quot;/services/a360/token&quot;]">
+      <http:headers>
+                
+        <![CDATA[#[{
+                    "Content-Type": "application/x-www-form-urlencoded"
+                }]]]>
+              
+      </http:headers>
+    </http:request>
+    <http:request doc:id="sagdny" doc:name="Get All Jobs" url="#[&quot;https://&quot; ++ vars.DCTokenResponse.instance_url ++ &quot;/api/v1/ingest/jobs&quot;]">
+      <http:headers>
+                
+        <![CDATA[#[{
+                    "Authorization": "Bearer " ++ vars.DCTokenResponse.access_token
+                }]]]>
+              
+      </http:headers>
+    </http:request>
+    <ee:transform doc:name="extract data">
+      <ee:message>
+        <ee:set-payload>
+                    
+          <![CDATA[%dw 2.0
+        output application/json
+        ---
+        payload.data]]>
+                  
+        </ee:set-payload>
+      </ee:message>
+    </ee:transform>
   </sub-flow>
 </mule>

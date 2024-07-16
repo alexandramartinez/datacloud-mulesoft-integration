@@ -405,6 +405,42 @@ traits:
       > It may take a few minutes for your data to be updated in Data Cloud. You can manually check the records in Data Cloud or wait to attempt the `/query` from your MuleSoft API.
 
 /bulk:
+  get:
+    displayName: Retrieve the information for all the jobs
+    responses:
+      200:
+        body:
+          application/json:
+            type: array
+            items:
+              type: DataCloudBulkJob
+    description: |
+      There is no need to send additional information with this call. The Mule application will use the Data Cloud credentials you have configured to make the call to your Data Cloud instance.
+
+      If the call was successful, you will receive a `200 - OK` successful response with the list of the Data Cloud jobs you have access to. If no jobs are available, you will receive an empty array `[]`.
+
+      For example: 
+
+      ```json
+      [
+        {
+            "object": "customer",
+            "id": "f3a58-8d22-4a72-a41d-083c3c",
+            "operation": "upsert",
+            "sourceName": "MuleSoft_Customers",
+            "createdById": "0000AD",
+            "createdDate": "2024-07-11T20:15:00.000000Z",
+            "systemModstamp": "",
+            "state": "UploadComplete",
+            "contentType": "CSV",
+            "apiVersion": "v1",
+            "contentUrl": "/api/v1/ingest/jobs/f3a58-8d22-4a72-a41d-083c3c/batches",
+            "retries": 0,
+            "totalProcessingTime": 0
+        }
+      ]
+      ```
+      
   /upsert:
     post:
       displayName: Insert unexisting records or update existing ones in bulk
@@ -512,7 +548,7 @@ traits:
       description: |
         Deletes an existing bulk job based on its ID. Only the Job ID is needed, nothing else.
 
-        If the given job is not finished yet (not in a `Failed` or `JobComplete` state), it will be aborted first in order to delete it.
+        If the given job is still open (in an `Open` state), it will be aborted first in order to delete it. If the job has already been closed (`UploadComplete` state) and it's already in the queue, you will have to wait until it finishes processing in Data Cloud before attempting to delete again - you will receive a 409 error if this is the case.
 
         If everything ran smoothly, you will receive a `200 - OK` successful response.
 
