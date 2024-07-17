@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd ">
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdc="http://www.mulesoft.org/schema/mule/sdc" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd 
+	http://www.mulesoft.org/schema/mule/sdc http://www.mulesoft.org/schema/mule/sdc/current/mule-sdc.xsd">
     <flow name="data-cloud-integration-api-main">
         <http:listener config-ref="data-cloud-integration-api-httpListenerConfig" path="/api/*">
             <http:response statusCode="#[vars.httpStatus default 200]">
@@ -115,5 +116,47 @@ output application/json
     </flow>
     <flow name="post:\schema:application\json:data-cloud-integration-api-config">
         <flow-ref name="implementation-schema" />
+    </flow>
+    <flow name="post:\bulk\upsert:text\plain:data-cloud-integration-api-config">
+        <flow-ref name="implementation-bulk-upsert" />
+        <error-handler>
+            <on-error-continue>
+                <flow-ref name="global-create-error" />
+            </on-error-continue>
+        </error-handler>
+    </flow>
+    <flow name="post:\bulk\upsert:application\json:data-cloud-integration-api-config">
+        <flow-ref name="implementation-bulk-upsert" />
+        <error-handler>
+            <on-error-continue>
+                <flow-ref name="global-create-error" />
+            </on-error-continue>
+        </error-handler>
+    </flow>
+    <flow name="get:\bulk\(id):data-cloud-integration-api-config">
+        <flow-ref name="global-set-jobId-from-uriParam" />
+        <flow-ref name="implementation-bulk-getJob" />
+        <error-handler>
+            <on-error-continue>
+                <flow-ref name="global-create-error" />
+            </on-error-continue>
+        </error-handler>
+    </flow>
+    <flow name="delete:\bulk\(id):data-cloud-integration-api-config">
+        <flow-ref name="global-set-jobId-from-uriParam" />
+        <flow-ref name="implementation-bulk-deleteJob" />
+        <error-handler>
+            <on-error-continue>
+                <flow-ref name="global-create-error" />
+            </on-error-continue>
+        </error-handler>
+    </flow>
+    <flow name="get:\bulk:data-cloud-integration-api-config">
+        <flow-ref  name="implementation-bulk-getAllJobs"/>
+        <error-handler>
+            <on-error-continue>
+                <flow-ref name="global-create-error" />
+            </on-error-continue>
+        </error-handler>
     </flow>
 </mule>

@@ -1,11 +1,13 @@
 # cURL requests
 
-Copy the scripts to run these in cURL from your Terminal. Make sure you replace the `paste_your_host` string from the `--location` to your actual host URL.
+Copy the scripts to run these in cURL from your Terminal. 
+
+Make sure you replace the `{{host}}` string to your actual host URL and the `{{id}}` string to the bulk job id (i.e., `fc9b6063-fe23-4c5e-86fc-3c7d4c15eb59`).
 
 ## POST /schema
 
 ```shell
-curl --location 'paste_your_host/api/schema?openapiversion=3.0.3' \
+curl '{{host}}/api/schema?openapiversion=3.0.3' \
 --header 'Content-Type: application/json' \
 --data-raw '{
   "customer": {
@@ -30,81 +32,138 @@ curl --location 'paste_your_host/api/schema?openapiversion=3.0.3' \
 ## POST /query
 
 ```shell
-curl --location 'paste_your_host/api/query' \
+curl '{{host}}/api/query' \
 --header 'Content-Type: text/plain' \
---data 'SELECT *
-FROM MuleSoft_Ingestion_API_runner_p_38447E8E__dll'
+--data 'SELECT * FROM MuleSoft_Ingestion_API_runner_p_38447E8E__dll'
 ```
 
-## POST /insert
+## POST /insert (streaming)
 
 ```shell
-curl --location 'paste_your_host/api/insert?sourceApiName=MuleSoft_Ingestion_API&objectName=runner_profiles' \
+curl '{{host}}/api/insert?sourceApiName=MuleSoft_Customers&objectName=customer' \
 --header 'Content-Type: application/json' \
 --data-raw '[
-  {
-    "maid": 1,
-    "first_name": "FNAME TEST 1",
-    "last_name": "LNAME TEST 1",
-    "email": "email1@sf.com",
-    "gender": "Male",
-    "city": "San Francisco",
-    "state": "CA",
-    "created": "2024-01-31"
-  },
-  {
-    "maid": 2,
-    "first_name": "FNAME TEST 2",
-    "last_name": "LNAME TEST 2",
-    "email": "email2@sf.com",
-    "gender": "Female",
-    "city": "San Francisco",
-    "state": "CA",
-    "created": "2024-01-31"
-  },
-  {
-    "maid": 3,
-    "first_name": "FNAME TEST 3",
-    "last_name": "LNAME TEST 3",
-    "email": "email3@sf.com",
-    "gender": "Female",
-    "city": "San Francisco",
-    "state": "CA",
-    "created": "2024-01-31"
-  },
-  {
-    "maid": 4,
-    "first_name": "FNAME TEST 4",
-    "last_name": "LNAME TEST 4",
-    "email": "email4@sf.com",
-    "gender": "Other",
-    "city": "San Francisco",
-    "state": "CA",
-    "created": "2024-01-31"
-  },
-  {
-    "maid": 5,
-    "first_name": "FNAME TEST 5",
-    "last_name": "LNAME TEST 5",
-    "email": "email5@sf.com",
-    "gender": "Male",
-    "city": "San Francisco",
-    "state": "CA",
-    "created": "2024-01-31"
-  }
+    {
+        "id": 1,
+        "first_name": "Alex",
+        "last_name": "Martinez",
+        "email": "alex@sf.com",
+        "street": "415 Mission Street",
+        "city": "San Francisco",
+        "state": "CA",
+        "postalCode": "94105",
+        "lat": 37.78916,
+        "lng": -122.39521
+    },
+    {
+        "id": 2,
+        "first_name": "Akshata",
+        "last_name": "Sawant",
+        "email": "akshata@sf.com",
+        "street": "415 Mission Street",
+        "city": "San Francisco",
+        "state": "CA",
+        "postalCode": "94105",
+        "lat": 37.78916,
+        "lng": -122.39521
+    },
+    {
+        "id": 3,
+        "first_name": "Danielle",
+        "last_name": "Larregui",
+        "email": "danielle@sf.com",
+        "street": "415 Mission Street",
+        "city": "San Francisco",
+        "state": "CA",
+        "postalCode": "94105",
+        "lat": 37.78916,
+        "lng": -122.39521
+    }
 ]'
 ```
 
-## DELETE /delete
+## DELETE /delete (streaming)
 
 ```shell
-curl --location --request DELETE 'paste_your_host/api/delete?sourceApiName=MuleSoft_Ingestion_API&objectName=runner_profiles' \
+curl --request DELETE '{{host}}/api/delete?sourceApiName=MuleSoft_Customers&objectName=customer' \
 --header 'Content-Type: application/json' \
 --data '[
   1,
-  2,
-  3,
-  4,
-  5
+  3
 ]'
+```
+
+## GET /bulk
+
+```shell
+curl '{{host}}/api/bulk'
+```
+
+## POST /bulk/upsert (CSV)
+
+```shell
+curl '{{host}}/api/bulk/upsert?sourceApiName=MuleSoft_Customers&objectName=customer' \
+--header 'Content-Type: text/plain' \
+--data-raw 'id,first_name,last_name,email,street,city,state,postalCode,lat,lng
+1,Alex,Martinez,alex@sf.com,415 Mission Street,San Francisco,CA,94105,37.78916,-122.39521
+2,Akshata,Sawant,akshata@sf.com,415 Mission Street,San Francisco,CA,94105,37.78916,-122.39521
+3,Danielle,Larregui,danielle@sf.com,415 Mission Street,San Francisco,CA,94105,37.78916,-122.39521
+'
+```
+
+## POST /bulk/upsert (JSON)
+
+```shell
+curl '{{host}}/api/bulk/upsert?sourceApiName=MuleSoft_Customers&objectName=customer' \
+--header 'Content-Type: application/json' \
+--data-raw '[
+    {
+        "id": 1,
+        "first_name": "Alex",
+        "last_name": "Martinez",
+        "email": "alex@sf.com",
+        "street": "415 Mission Street",
+        "city": "San Francisco",
+        "state": "CA",
+        "postalCode": "94105",
+        "lat": 37.78916,
+        "lng": -122.39521
+    },
+    {
+        "id": 2,
+        "first_name": "Akshata",
+        "last_name": "Sawant",
+        "email": "akshata@sf.com",
+        "street": "415 Mission Street",
+        "city": "San Francisco",
+        "state": "CA",
+        "postalCode": "94105",
+        "lat": 37.78916,
+        "lng": -122.39521
+    },
+    {
+        "id": 3,
+        "first_name": "Danielle",
+        "last_name": "Larregui",
+        "email": "danielle@sf.com",
+        "street": "415 Mission Street",
+        "city": "San Francisco",
+        "state": "CA",
+        "postalCode": "94105",
+        "lat": 37.78916,
+        "lng": -122.39521
+    }
+]'
+```
+
+## GET /bulk/{id}
+
+```shell
+curl '{{host}}/api/bulk/{{id}}?sourceApiName=MuleSoft_Customers&objectName=customer'
+```
+
+## DELETE /bulk/{id}
+
+```shell
+curl --request DELETE '{{host}}/api/bulk/{{id}}'
 ```

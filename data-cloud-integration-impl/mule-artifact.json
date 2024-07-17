@@ -1,9 +1,9 @@
 {
-    "minMuleVersion": "4.4.0",
-    "secureProperties": [
-        "salesforce.username",
-        "salesforce.password",
-        "cdp.consumer.key",
-        "cdp.consumer.secret"
-    ]
+  "minMuleVersion": "4.4.0",
+  "secureProperties": [
+    "salesforce.username",
+    "salesforce.password",
+    "cdp.consumer.key",
+    "cdp.consumer.secret"
+  ]
 }
