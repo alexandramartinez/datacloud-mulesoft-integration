@@ -10,6 +10,11 @@ What's in this repo:
 3. [rest-clients-requests](/rest-clients-requests/) ~ Contains the Postman/Thunder Client collections to run the requests to call your integration. There is also a .md file in the curl folder for you to copy/paste cURL commands if that's easier for you.
 4. [example-schema.yaml](/example-schema.yaml) ~ Example YAML file that you can use if you don't have a YAML schema to create the Ingestion API/Data Stream objects in Data Cloud.
 
+## Similar repos
+
+[![](https://github-readme-stats.vercel.app/api/pin/?username=alexandramartinez&repo=data-cloud-auth&theme=default_repocard)](https://github.com/alexandramartinez/data-cloud-auth)
+[![](https://github-readme-stats.vercel.app/api/pin/?username=alexandramartinez&repo=mule-dynamodb-to-datacloud&theme=default_repocard)](https://github.com/alexandramartinez/mule-dynamodb-to-datacloud)
+
 ---
 
 ## Set up the integration
